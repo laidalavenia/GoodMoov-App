@@ -1,4 +1,3 @@
-// nuxt.config.ts
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
@@ -6,8 +5,6 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxt/image",
-    "@nuxt/scripts",
-    "@nuxt/content",
     "@nuxtjs/tailwindcss",
     "shadcn-nuxt",
   ],
@@ -16,6 +13,7 @@ export default defineNuxtConfig({
     prefix: "",
     componentDir: "./components/ui",
   },
+
   components: [
     {
       path: "~/components",
@@ -29,13 +27,24 @@ export default defineNuxtConfig({
   },
 
   css: ["~/assets/css/main.css"],
-  plugins: ["~/plugins/vue-query"],
 
   runtimeConfig: {
     public: {
-      apiBase:
-        process.env.NUXT_PUBLIC_API_BASE ||
-        "https://jsonplaceholder.typicode.com",
+      tmdbApiKey:
+        process.env.NUXT_PUBLIC_TMDB_API_KEY ||
+        "02f6244779c57b77285758150dd57203",
+      tmdbAccessToken: process.env.NUXT_PUBLIC_TMDB_ACCESS_TOKEN,
+      tmdbBaseUrl: "https://api.themoviedb.org/3",
+      tmdbImageBaseUrl: "https://image.tmdb.org/t/p",
+    },
+  },
+
+  app: {
+    head: {
+      title: "goodmoov",
+      meta: [
+        { name: "description", content: "Discover your next favorite movie" },
+      ],
     },
   },
 });

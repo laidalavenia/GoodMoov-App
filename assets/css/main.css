@@ -4,72 +4,27 @@
 
 @layer base {
   :root {
-    /* Matcha Green Theme */
-    --background: 138 35% 97%; /* Light cream background */
-    --foreground: 140 25% 15%; /* Dark green text */
-
-    --card: 0 0% 100%; /* White cards */
-    --card-foreground: 140 25% 15%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 140 25% 15%;
-
-    --primary: 142 50% 45%; /* Matcha green */
+    /* Purple/Dark Theme - goodmoov */
+    --background: 240 10% 10%; /* Dark background #1a1a1f */
+    --foreground: 0 0% 95%; /* Off-white */
+    --card: 240 10% 15%; /* Slightly lighter than bg #242429 */
+    --card-foreground: 0 0% 95%;
+    --popover: 240 10% 12%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 270 70% 60%; /* Purple #8b5cf6 */
     --primary-foreground: 0 0% 100%;
-
-    --secondary: 138 30% 90%; /* Light green */
-    --secondary-foreground: 140 25% 15%;
-
-    --muted: 138 25% 94%; /* Very light green */
-    --muted-foreground: 140 15% 40%;
-
-    --accent: 142 45% 88%; /* Pastel green */
-    --accent-foreground: 140 25% 15%;
-
+    --secondary: 240 10% 20%; /* Darker gray */
+    --secondary-foreground: 0 0% 95%;
+    --muted: 240 10% 18%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 270 70% 60%; /* Purple accent */
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-
-    --border: 138 25% 85%; /* Light green border */
-    --input: 138 25% 85%;
-    --ring: 142 50% 45%;
-
+    --border: 240 10% 25%; /* Subtle border */
+    --input: 240 10% 25%;
+    --ring: 270 70% 60%;
     --radius: 0.75rem;
-
-    /* Custom matcha colors */
-    --matcha-light: 142 40% 85%;
-    --matcha-medium: 142 50% 45%;
-    --matcha-dark: 140 45% 30%;
-    --cream: 40 30% 96%;
-  }
-
-  .dark {
-    --background: 140 30% 8%; /* Dark green background */
-    --foreground: 138 20% 95%;
-
-    --card: 140 25% 12%;
-    --card-foreground: 138 20% 95%;
-
-    --popover: 140 25% 12%;
-    --popover-foreground: 138 20% 95%;
-
-    --primary: 142 45% 55%; /* Lighter matcha for dark mode */
-    --primary-foreground: 140 30% 10%;
-
-    --secondary: 140 25% 18%;
-    --secondary-foreground: 138 20% 95%;
-
-    --muted: 140 25% 18%;
-    --muted-foreground: 138 15% 65%;
-
-    --accent: 140 25% 18%;
-    --accent-foreground: 138 20% 95%;
-
-    --destructive: 0 60% 45%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 140 25% 18%;
-    --input: 140 25% 18%;
-    --ring: 142 45% 55%;
   }
 }
 
@@ -85,77 +40,83 @@
       "calt" 1;
   }
 
-  /* Glassmorphism utilities */
-  .glass {
-    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl;
-  }
-
-  .glass-dark {
-    @apply bg-card/70 backdrop-blur-xl border border-border/20 shadow-xl;
-  }
-
-  /* Matcha gradient backgrounds */
-  .bg-matcha-gradient {
-    @apply bg-gradient-to-br from-[hsl(var(--matcha-light))] via-[hsl(var(--cream))] to-[hsl(var(--matcha-medium))]/20;
-  }
-
-  .bg-matcha-gradient-subtle {
-    @apply bg-gradient-to-br from-background via-[hsl(var(--matcha-light))]/10 to-background;
-  }
-
-  /* Custom animations */
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
-  }
-
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-
-  @keyframes blob {
-    0%,
-    100% {
-      transform: translate(0px, 0px) scale(1);
-    }
-    33% {
-      transform: translate(30px, -50px) scale(1.1);
-    }
-    66% {
-      transform: translate(-20px, 20px) scale(0.9);
-    }
-  }
-
-  .animate-blob {
-    animation: blob 7s infinite;
-  }
-
-  .animation-delay-2000 {
-    animation-delay: 2s;
-  }
-
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
-}
-
-/* Scrollbar styling */
-@layer utilities {
-  .scrollbar-thin::-webkit-scrollbar {
+  ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-track {
-    @apply bg-muted rounded;
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
   }
 
-  .scrollbar-thin::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     @apply bg-primary/50 rounded hover:bg-primary/70;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+      to right,
+      hsl(var(--card)) 0%,
+      hsl(var(--muted)) 20%,
+      hsl(var(--card)) 40%,
+      hsl(var(--card)) 100%
+    );
+    background-size: 1000px 100%;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-purple-500 to-violet-500 bg-clip-text text-transparent;
+  }
+
+  .glass {
+    @apply bg-card/60 backdrop-blur-xl border border-border/40;
+  }
+
+  .movie-card-hover {
+    @apply transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary/20;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
