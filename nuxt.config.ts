@@ -31,8 +31,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       tmdbApiKey:
-        process.env.NUXT_PUBLIC_TMDB_API_KEY ||
-        "02f6244779c57b77285758150dd57203",
+        process.env.NUXT_PUBLIC_TMDB_API_KEY,
       tmdbAccessToken: process.env.NUXT_PUBLIC_TMDB_ACCESS_TOKEN,
       tmdbBaseUrl: "https://api.themoviedb.org/3",
       tmdbImageBaseUrl: "https://image.tmdb.org/t/p",
