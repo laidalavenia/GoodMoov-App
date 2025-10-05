@@ -1,38 +1,82 @@
 <script setup lang="ts">
-import { RefreshCw } from "lucide-vue-next";
-import { useSeoMeta } from "nuxt/app";
-import { Button } from '~/components/ui/button'
+const movieApi = useMovieApi();
 
-useSeoMeta({
-  title: "Nuxt 3 Starter",
-  description: "Nuxt 3 with Vue 3, Tailwind, shadcn-vue, and TanStack Query",
+const selectedGenre = ref<number | null>(null);
+
+// Fetch all data
+const { data: genresData } = await useAsyncData("genres", () =>
+  movieApi.getGenres()
+);
+
+const { data: heroMoviesData } = await useAsyncData("heroMovies", () =>
+  movieApi.getPopularMovies(1)
+);
+
+const { data: popularMoviesData } = await useAsyncData("popularMovies", () =>
+  movieApi.getPopularMovies(1)
+);
+
+const { data: latestMoviesData } = await useAsyncData("latestMovies", () =>
+  movieApi.getNowPlayingMovies(1)
+);
+
+const genres = computed(() => genresData.value?.genres || []);
+const heroMovies = computed(
+  () => heroMoviesData.value?.results.slice(0, 5) || []
+);
+const popularMovies = computed(
+  () => popularMoviesData.value?.results.slice(0, 12) || []
+);
+const latestMovies = computed(
+  () => latestMoviesData.value?.results.slice(0, 12) || []
+);
+
+const handleGenreSelect = (genreId: number | null) => {
+  selectedGenre.value = genreId;
+  if (genreId) {
+    // Navigate to category page or filter
+    navigateTo(`/?genre=${genreId}`);
+  } else {
+    navigateTo("/");
+  }
+};
+
+useHead({
+  title: "goodmoov - Discover Your Next Favorite Movie",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Discover and explore thousands of movies. Find your next favorite film.",
+    },
+  ],
 });
 </script>
 
 <template>
-  <div class="min-h-screen bg-background">
-    <header class="border-b">
-      <div class="container mx-auto px-6 py-4">
-        <h1 class="text-2xl font-bold">Nuxt 3 Starter</h1>
-      </div>
-    </header>
+  <div class="container mx-auto px-4 py-6 space-y-12">
+    <!-- Hero Carousel -->
+    <HeroCarousel v-if="heroMovies.length > 0" :movies="heroMovies" />
 
-    <main class="container mx-auto px-6 py-8">
-      <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">
-          Welcome to Your Starter Project
-        </h2>
-        <div class="flex gap-2">
-          <Button>
-            <RefreshCw class="w-4 h-4 mr-2" />
-            Primary Button
-          </Button>
-          <Button variant="outline">Outline Button</Button>
-          <Button variant="secondary">Secondary Button</Button>
-        </div>
-      </div>
+    <!-- Genre Carousel -->
+    <GenreCarousel
+      :genres="genres"
+      :selected-genre="selectedGenre"
+      @select-genre="handleGenreSelect"
+    />
 
-      <UserList />
-    </main>
+    <!-- Popular Section -->
+    <MovieSection
+      title="Popular"
+      :movies="popularMovies"
+      :loading="!popularMoviesData"
+    />
+
+    <!-- Latest Section -->
+    <MovieSection
+      title="Latest"
+      :movies="latestMovies"
+      :loading="!latestMoviesData"
+    />
   </div>
 </template>
