@@ -76,7 +76,7 @@ nuxt4-starter/
 1. Clone the repository:
 ```bash
 git clone <your-repo-url>
-cd nuxt3-starter
+cd nuxt4-starter
 ```
 
 2. Install dependencies:

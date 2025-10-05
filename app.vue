@@ -1,15 +1,5 @@
-<script setup lang="ts">
-// import { Database } from "lucide-vue-next";
-</script>
-
 <template>
-  <div>
+  <NuxtLayout>
     <NuxtPage />
-  </div>
+  </NuxtLayout>
 </template>
-<!-- <template>
-  <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
-</template> -->

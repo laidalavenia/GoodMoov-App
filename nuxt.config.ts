@@ -16,6 +16,12 @@ export default defineNuxtConfig({
     prefix: "",
     componentDir: "./components/ui",
   },
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
 
   typescript: {
     strict: true,
