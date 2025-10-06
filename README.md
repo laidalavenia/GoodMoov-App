@@ -4,6 +4,12 @@ A modern movie discovery platform built with Nuxt 4, Vue 3, and TMDB API. Browse
 
 ---
 
+## Live Demo Website
+
+https://goodmoov-app.vercel.app/
+
+---
+
 ## ✨ Features
 
 - 🎥 **Browse Movies** - Explore popular and latest movies with beautiful cards
