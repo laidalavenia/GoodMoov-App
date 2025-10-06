@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useQuery } from "@tanstack/vue-query";
 import { Star, Calendar, Clock, User } from "lucide-vue-next";
 import type { MovieDetail, Credits } from "~/types";
 
@@ -6,20 +7,23 @@ const route = useRoute();
 const movieApi = useMovieApi();
 const movieId = computed(() => Number(route.params.id));
 
-const { data: movie, pending: moviePending } = await useAsyncData<MovieDetail>(
-  `movie-${movieId.value}`,
-  () => movieApi.getMovieDetails(movieId.value)
-);
+// Fetch movie details 
+const { data: movie, isLoading: moviePending } = useQuery({
+  queryKey: ["movie", movieId],
+  queryFn: () => movieApi.getMovieDetails(movieId.value),
+});
 
-const { data: credits } = await useAsyncData<Credits>(
-  `credits-${movieId.value}`,
-  () => movieApi.getMovieCredits(movieId.value)
-);
+// Fetch credits
+const { data: credits } = useQuery({
+  queryKey: ["credits", movieId],
+  queryFn: () => movieApi.getMovieCredits(movieId.value),
+});
 
-const { data: similarMoviesData } = await useAsyncData(
-  `similar-${movieId.value}`,
-  () => movieApi.getSimilarMovies(movieId.value)
-);
+// Fetch similar movies
+const { data: similarMoviesData } = useQuery({
+  queryKey: ["similar", movieId],
+  queryFn: () => movieApi.getSimilarMovies(movieId.value),
+});
 
 const backdropUrl = computed(() =>
   getImageUrl(movie.value?.backdrop_path, "original")
