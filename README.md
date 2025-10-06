@@ -37,7 +37,7 @@ A modern movie discovery platform built with Nuxt 4, Vue 3, and TMDB API. Browse
 
 <h3 align="center">4. Genre Filtering</h3>
 <p align="center">
-    <img width="700" src="/assets/images/readme/searcGenre.png" alt="Search Genre Movie"/>
+    <img width="700" src="/assets/images/readme/searchGenre.png" alt="Search Genre Movie"/>
 </p>
 
 ---
