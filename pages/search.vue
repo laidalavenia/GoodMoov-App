@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useQuery } from "@tanstack/vue-query";
 import { Search } from "lucide-vue-next";
 
 const route = useRoute();
@@ -8,16 +9,14 @@ const movieApi = useMovieApi();
 const searchQuery = ref(route.query.q?.toString() || "");
 const currentPage = ref(1);
 
-const { data: searchResults, pending } = await useAsyncData(
-  "searchResults",
-  () => {
+const { data: searchResults, isLoading: pending } = useQuery({
+  queryKey: ["searchMovies", searchQuery, currentPage],
+  queryFn: () => {
     if (!searchQuery.value.trim()) return null;
     return movieApi.searchMovies(searchQuery.value, currentPage.value);
   },
-  {
-    watch: [searchQuery, currentPage],
-  }
-);
+  enabled: computed(() => searchQuery.value.trim().length > 0),
+});
 
 const movies = computed(() => searchResults.value?.results || []);
 const hasMore = computed(() => {
